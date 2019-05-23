@@ -10,7 +10,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper
 import net.minecraftforge.fml.relauncher.Side
-import scala.collection.parallel.ParIterableLike
 
 object PacketHandler {
     @JvmStatic
@@ -25,50 +24,39 @@ object PacketHandler {
     }
 }
 
-class CoordsMessage(var toSendXTE: Int, var toSendYTE: Int, var toSendZTE: Int,
-                    var toSendXLT: Int, var toSendYLT: Int, var toSendZLT: Int) : IMessage {
+val errorBlockPos = BlockPos(Int.MIN_VALUE, Int.MIN_VALUE, Int.MIN_VALUE)
 
-    constructor(blockPosTE: BlockPos, blockPosLT: BlockPos) :
-            this(blockPosTE.x, blockPosTE.y, blockPosTE.z,
-                    blockPosLT.x, blockPosLT.y, blockPosLT.z)
+class CoordsMessage(var blockPosTE: BlockPos, var blockPosLT: BlockPos) : IMessage {
 
-    constructor() : this(Int.MIN_VALUE, Int.MIN_VALUE, Int.MIN_VALUE, Int.MIN_VALUE, Int.MIN_VALUE, Int.MIN_VALUE)
+
+    constructor(toSendXTE: Int, toSendYTE: Int, toSendZTE: Int,
+                    toSendXLT: Int, toSendYLT: Int, toSendZLT: Int) :
+            this(BlockPos(toSendXTE, toSendYTE, toSendZTE),
+                    BlockPos(toSendXLT, toSendYLT, toSendZLT))
+
+    constructor() : this(errorBlockPos, errorBlockPos)
 
     override fun toBytes(buf: ByteBuf?) {
-        buf?.writeInt(toSendXTE)
-        buf?.writeInt(toSendYTE)
-        buf?.writeInt(toSendZTE)
-
-        buf?.writeInt(toSendXLT)
-        buf?.writeInt(toSendYLT)
-        buf?.writeInt(toSendZLT)
+        buf?.writeLong(blockPosTE.toLong())
+        buf?.writeLong(blockPosLT.toLong())
     }
 
     override fun fromBytes(buf: ByteBuf?) {
-        toSendXTE = buf?.readInt() ?: Int.MIN_VALUE
-        toSendYTE = buf?.readInt() ?: Int.MIN_VALUE
-        toSendZTE = buf?.readInt() ?: Int.MIN_VALUE
-
-        toSendXLT = buf?.readInt() ?: Int.MIN_VALUE
-        toSendYLT = buf?.readInt() ?: Int.MIN_VALUE
-        toSendZLT = buf?.readInt() ?: Int.MIN_VALUE
+        blockPosTE = BlockPos.fromLong(buf?.readLong() ?: errorBlockPos.toLong())
+        blockPosLT = BlockPos.fromLong(buf?.readLong() ?: errorBlockPos.toLong())
     }
 
     class SaveCoordsMessageHandler : IMessageHandler<CoordsMessage, IMessage> {
         override fun onMessage(message: CoordsMessage?, ctx: MessageContext?): IMessage? {
             if (message != null && ctx != null) {
                 //Check for values as a result of nulls
-                if (listOf(message.toSendXTE, message.toSendYTE, message.toSendZTE,
-                                message.toSendXLT, message.toSendYLT, message.toSendZLT)
-                                .contains(Int.MIN_VALUE))
+                if (listOf(message.blockPosLT, message.blockPosTE).contains(errorBlockPos))
                     return null
-                val posTE = BlockPos(message.toSendXTE, message.toSendYTE, message.toSendZTE)
-                val posLT = BlockPos(message.toSendXLT, message.toSendYLT, message.toSendZLT)
-                println("posTE:$posTE | posLT:$posLT")
+//                println("posTE:$posTE | posLT:$posLT")
                 val serverWorld = ctx.serverHandler.player.serverWorld
                 serverWorld.addScheduledTask {
-                    val opener = serverWorld.getTileEntity(posTE) as TileOpener
-                    opener.targetPos = posLT
+                    val opener = serverWorld.getTileEntity(message.blockPosTE) as TileOpener
+                    opener.targetPos = message.blockPosLT
                 }
             }
             return null
@@ -78,14 +66,12 @@ class CoordsMessage(var toSendXTE: Int, var toSendYTE: Int, var toSendZTE: Int,
     class LoadCoordsMessageHandler : IMessageHandler<CoordsMessage, IMessage> {
         override fun onMessage(message: CoordsMessage?, ctx: MessageContext?): IMessage? {
             if (message != null) {
-                val posTE = BlockPos(message.toSendXTE, message.toSendYTE, message.toSendZTE)
-                val posLT = BlockPos(message.toSendXLT, message.toSendYLT, message.toSendZLT)
                 Minecraft.getMinecraft().addScheduledTask {
-                    val opener = Minecraft.getMinecraft().world.getTileEntity(posTE) as TileOpener
-                    opener.targetPos = posLT
+                    val opener = Minecraft.getMinecraft().world.getTileEntity(message.blockPosTE) as TileOpener
+                    opener.targetPos = message.blockPosLT
                     val screen = Minecraft.getMinecraft().currentScreen
                     if (screen is GuiOpener){
-                        screen.setFields(posLT)
+                        screen.setFields(message.blockPosLT)
                     }
                 }
             }
