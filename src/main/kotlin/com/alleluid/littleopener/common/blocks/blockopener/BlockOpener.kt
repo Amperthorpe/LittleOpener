@@ -29,20 +29,9 @@ object BlockOpener : BlockTileBase<TileOpener>(Material.ROCK, "block_opener", Gu
 
     private var isOn: Boolean = false
 
-    private fun redstoneCheck(state: IBlockState, worldIn: World, pos: BlockPos) {
-        if (!worldIn.isRemote && worldIn.isBlockPowered(pos)) {
-            getTileEntity(worldIn, pos).onPowered()
-        }
-    }
-
     @SuppressWarnings("deprecation")
     override fun neighborChanged(state: IBlockState, worldIn: World, pos: BlockPos, blockIn: Block, fromPos: BlockPos) {
-        redstoneCheck(state, worldIn, pos)
-    }
-
-    override fun onBlockPlacedBy(worldIn: World, pos: BlockPos, state: IBlockState, placer: EntityLivingBase, stack: ItemStack) {
-        super.onBlockPlacedBy(worldIn, pos, state, placer, stack)
-        redstoneCheck(state, worldIn, pos)
+        getTileEntity(worldIn, pos).onPowered()
     }
 
     override val tileEntityClass: Class<TileOpener>
