@@ -75,14 +75,14 @@ class GuiOpener(val openerPos: BlockPos) : GuiScreen() {
                 fieldInt--
 
             focused.text = fieldInt.toString()
-        } else if (keyCode == Utils.CODE_TAB){
+        } else if (Utils.keyRight.isActiveAndMatches(keyCode)){
             val focusedIdx = fields.indexOfFirst { it.isFocused }
             fields.forEach { it.isFocused = false }
             val newIdx = if (focusedIdx + 1 > 2) 0 else focusedIdx + 1
             fields[newIdx].isFocused = true
         } else if (Utils.keyInv.isActiveAndMatches(keyCode)) {
             this.mc.player.closeScreen()
-        }
+        } else println("Keycode: $keyCode")
     }
 
     override fun onGuiClosed() {

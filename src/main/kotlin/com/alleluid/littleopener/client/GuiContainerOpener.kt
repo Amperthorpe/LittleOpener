@@ -71,7 +71,7 @@ class GuiContainerOpener(val container: ContainerOpener, val posTE: BlockPos) : 
                 fieldInt--
 
             focused.text = fieldInt.toString()
-        } else if (keyCode == Utils.CODE_TAB){
+        } else if (Utils.keyRight.isActiveAndMatches(keyCode)){
             val focusedIdx = fields.indexOfFirst { it.isFocused }
             fields.forEach { it.isFocused = false }
             val newIdx = if (focusedIdx + 1 > 2) 0 else focusedIdx + 1
