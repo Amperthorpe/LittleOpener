@@ -1,9 +1,7 @@
 package com.alleluid.littleopener.client
 
 import com.alleluid.littleopener.common.blocks.blockopener.ContainerOpener
-import jdk.nashorn.internal.ir.Block
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.inventory.Container
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import net.minecraftforge.fml.common.network.IGuiHandler

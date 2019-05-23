@@ -51,7 +51,7 @@ object BlockOpener : BlockTileBase<TileOpener>(Material.ROCK, "block_opener", Gu
     override fun onBlockActivated(worldIn: World, pos: BlockPos, state: IBlockState, playerIn: EntityPlayer, hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean {
         return if (guiID != null) {
             if (!playerIn.isSneaking) {
-                if (!worldIn.isRemote){
+                if (!worldIn.isRemote) {
                     val tileTarget = (worldIn.getTileEntity(pos) as TileOpener).targetPos
                     PacketHandler.INSTANCE.sendTo(CoordsMessage(pos.x, pos.y, pos.z, tileTarget.x, tileTarget.y, tileTarget.z), playerIn as EntityPlayerMP)
                 }
