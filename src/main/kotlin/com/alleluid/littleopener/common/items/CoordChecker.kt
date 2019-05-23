@@ -18,8 +18,9 @@ import net.minecraft.util.text.ChatType
 import net.minecraft.util.text.TextComponentString
 import net.minecraft.world.World
 
-object CoordChecker : Item(){
+object CoordChecker : Item() {
     private const val name = "coord_checker"
+
     init {
         translationKey = "$MOD_ID.$name"
         registryName = ResourceLocation(MOD_ID, name)
@@ -27,28 +28,27 @@ object CoordChecker : Item(){
     }
 
     override fun onItemUse(player: EntityPlayer, worldIn: World, pos: BlockPos, hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): EnumActionResult {
-        if (worldIn.isRemote){
-            Minecraft.getMinecraft().ingameGUI.addChatMessage(ChatType.SYSTEM, TextComponentString(pos.toString()))
-        }
         val stack = player.getHeldItem(hand)
-        if (!stack.hasTagCompound()){
+        if (!stack.hasTagCompound()) {
             stack.tagCompound = NBTTagCompound()
         }
 
-        if (worldIn.getBlockState(pos).block is BlockOpener){
+        if (worldIn.getBlockState(pos).block is BlockOpener) {
             val tileOpener = worldIn.getTileEntity(pos) as TileOpener
             val longPos = stack.tagCompound!!.getLong("targetPos")
             tileOpener.targetPos = BlockPos.fromLong(longPos)
-            if (worldIn.isRemote){
+            if (worldIn.isRemote) {
                 Minecraft.getMinecraft().ingameGUI.addChatMessage(ChatType.GAME_INFO, TextComponentString("Set opener to ${BlockPos.fromLong(longPos)}"))
             }
         } else {
             stack.tagCompound!!.setLong("targetPos", pos.toLong())
+            if (worldIn.isRemote)
+                Minecraft.getMinecraft().ingameGUI.addChatMessage(ChatType.SYSTEM, TextComponentString(pos.toString()))
         }
         return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ)
     }
 
     fun registerItemModel() {
-    LittleOpenerMod.proxy.registerItemRenderer(this, 0, name)
+        LittleOpenerMod.proxy.registerItemRenderer(this, 0, name)
     }
 }
