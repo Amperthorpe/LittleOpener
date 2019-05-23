@@ -1,0 +1,4 @@
+item.littleopener.coord_checker.name=Coordinate Checker
+item.littleopener.coord_checker.desc=Will display coords of block clicked.
+
+tile.littleopener.block_opener.name=Little Opener
