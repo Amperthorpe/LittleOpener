@@ -20,6 +20,10 @@ import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
 
 object BlockOpener : BlockTileBase<TileOpener>(Material.ROCK, "block_opener", GuiID.LITTLE_OPENER), ITileEntityProvider {
+    init {
+        blockHardness = 2f
+    }
+
     override fun createNewTileEntity(worldIn: World, meta: Int) = TileOpener()
     override fun createTileEntity(world: World, state: IBlockState) = TileOpener()
 
