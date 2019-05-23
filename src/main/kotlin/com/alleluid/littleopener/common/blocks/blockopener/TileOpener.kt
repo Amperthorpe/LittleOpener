@@ -34,8 +34,7 @@ class TileOpener : TileEntity() {
 
     fun onPowered() {
         println("onPowered:$targetPos")
-        //TODO: ensure block is loaded first
-        if (!world.isRemote) {
+        if (!world.isRemote && world.isBlockLoaded(targetPos)) {
             val cmdSender = CommandLogic(world)
             val rawCommand = "/lt-open ${targetPos.x} ${targetPos.y} ${targetPos.z}"
             println("Cmd: $rawCommand")
