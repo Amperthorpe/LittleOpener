@@ -56,14 +56,11 @@ object BlockOpener : BlockTileBase<TileOpener>(Material.ROCK, "block_opener", Gu
                     PacketHandler.INSTANCE.sendTo(CoordsMessage(pos.x, pos.y, pos.z, tileTarget.x, tileTarget.y, tileTarget.z), playerIn as EntityPlayerMP)
                 }
                 playerIn.openGui(LittleOpenerMod.instance, guiID.ordinal, worldIn, pos.x, pos.y, pos.z)
-            } else {
-                println((worldIn.getTileEntity(pos) as TileOpener).targetPos)
             }
             true
         } else
             super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ)
     }
 
-    override fun canConnectRedstone(state: IBlockState, world: IBlockAccess, pos: BlockPos, side: EnumFacing?) = true
     override fun getWeakChanges(world: IBlockAccess, pos: BlockPos) = true
 }
