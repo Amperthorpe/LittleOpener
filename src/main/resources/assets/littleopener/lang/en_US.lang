@@ -1,4 +1,3 @@
-item.littleopener.coord_checker.name=Coordinate Checker
-item.littleopener.coord_checker.desc=Will display coords of block clicked.
+item.littleopener.coord_checker.name=Coordinate Setter
 
 tile.littleopener.block_opener.name=Little Opener

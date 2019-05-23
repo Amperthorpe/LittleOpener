@@ -31,6 +31,7 @@ object BlockOpener : BlockTileBase<TileOpener>(Material.ROCK, "block_opener", Gu
 
     @SuppressWarnings("deprecation")
     override fun neighborChanged(state: IBlockState, worldIn: World, pos: BlockPos, blockIn: Block, fromPos: BlockPos) {
+        if (worldIn.isBlockPowered(pos))
         getTileEntity(worldIn, pos).onPowered()
     }
 
