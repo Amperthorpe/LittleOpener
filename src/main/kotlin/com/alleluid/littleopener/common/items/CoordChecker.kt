@@ -5,9 +5,11 @@ import com.alleluid.littleopener.MOD_ID
 import com.alleluid.littleopener.common.blocks.blockopener.BlockOpener
 import com.alleluid.littleopener.common.blocks.blockopener.TileOpener
 import net.minecraft.client.Minecraft
+import net.minecraft.client.util.ITooltipFlag
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.Item
+import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.EnumActionResult
 import net.minecraft.util.EnumFacing
@@ -25,6 +27,12 @@ object CoordChecker : Item() {
         translationKey = "$MOD_ID.$name"
         registryName = ResourceLocation(MOD_ID, name)
         creativeTab = CreativeTabs.REDSTONE
+    }
+
+    override fun addInformation(stack: ItemStack, worldIn: World?, tooltip: MutableList<String>, flagIn: ITooltipFlag) {
+        tooltip.add("Will display and store coords of block clicked.")
+        tooltip.add("Shift click onto Little Opener to transfer.")
+        super.addInformation(stack, worldIn, tooltip, flagIn)
     }
 
     override fun onItemUse(player: EntityPlayer, worldIn: World, pos: BlockPos, hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): EnumActionResult {
