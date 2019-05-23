@@ -27,20 +27,16 @@ class TileOpener : TileEntity() {
     private val name = "tile_opener"
     var targetPos: BlockPos = pos // Will be 0,0,0 on init
         set(value) {
-            println("setTargetPos:$value")
             field = value
             markDirty()
         }
 
     fun onPowered() {
-        println("onPowered:$targetPos")
         if (!world.isRemote && world.isBlockLoaded(targetPos)) {
             val cmdSender = CommandLogic(world)
             val rawCommand = "/lt-open ${targetPos.x} ${targetPos.y} ${targetPos.z}"
-            println("Cmd: $rawCommand")
             val serv = world.minecraftServer
             if (serv != null) {
-                println(serv.canUseCommand(2, "time"))
                 serv.commandManager.executeCommand(cmdSender, rawCommand)
             } else
                 println("It was null")
