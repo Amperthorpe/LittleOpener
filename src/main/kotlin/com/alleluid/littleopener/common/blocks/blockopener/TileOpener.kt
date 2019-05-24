@@ -28,7 +28,7 @@ class TileOpener : TileEntity() {
         return pos.getDistance(checkPos.x, checkPos.y, checkPos.z) <= maxDist
     }
 
-    fun onPowered() {
+    fun activate() {
         if (!world.isRemote && world.isBlockLoaded(targetPos)) {
             if (!checkRange()) {
                 targetPos = BlockPos.ORIGIN
