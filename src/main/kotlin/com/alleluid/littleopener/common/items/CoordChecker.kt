@@ -5,6 +5,7 @@ import com.alleluid.littleopener.LittleOpenerMod
 import com.alleluid.littleopener.MOD_ID
 import com.alleluid.littleopener.common.blocks.blockopener.BlockOpener
 import com.alleluid.littleopener.common.blocks.blockopener.TileOpener
+import com.alleluid.littleopener.playerMessage
 import net.minecraft.client.resources.I18n
 import net.minecraft.client.util.ITooltipFlag
 import net.minecraft.creativetab.CreativeTabs
@@ -17,7 +18,6 @@ import net.minecraft.util.EnumFacing
 import net.minecraft.util.EnumHand
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.math.BlockPos
-import net.minecraft.util.text.TextComponentTranslation
 import net.minecraft.world.World
 
 object CoordChecker : Item() {
@@ -46,9 +46,9 @@ object CoordChecker : Item() {
             val newPos = BlockPos.fromLong(stack.tagCompound!!.getLong("targetPos"))
             if (tileOpener.checkRange(newPos)){
                 tileOpener.targetPos = newPos
-                if (worldIn.isRemote) player.sendStatusMessage(TextComponentTranslation("text.littleopener.coord_checker.new_pos", newPos), true)
+                playerMessage(player, "coord_checker.set_opener_pos", newPos)
             } else {
-                if (worldIn.isRemote) player.sendStatusMessage(TextComponentTranslation("text.littleopener.coord_checker.too_far", ConfigHandler.maxDistance), true)
+                playerMessage(player, "coord_checker.over_limit", ConfigHandler.maxDistance)
             }
         } else {
             stack.tagCompound!!.setLong("targetPos", pos.toLong())
