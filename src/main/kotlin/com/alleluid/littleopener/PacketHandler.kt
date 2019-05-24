@@ -49,14 +49,14 @@ class CoordsMessage(var blockPosTE: BlockPos, var blockPosLT: BlockPos) : IMessa
     class SaveCoordsMessageHandler : IMessageHandler<CoordsMessage, IMessage> {
         override fun onMessage(message: CoordsMessage?, ctx: MessageContext?): IMessage? {
             if (message != null && ctx != null) {
-                //Check for values as a result of nulls
                 if (listOf(message.blockPosLT, message.blockPosTE).contains(errorBlockPos))
                     return null
-//                println("posTE:$posTE | posLT:$posLT")
                 val serverWorld = ctx.serverHandler.player.serverWorld
                 serverWorld.addScheduledTask {
-                    val opener = serverWorld.getTileEntity(message.blockPosTE) as TileOpener
-                    opener.targetPos = message.blockPosLT
+                    if (serverWorld.isBlockLoaded(message.blockPosLT) && serverWorld.isBlockLoaded(message.blockPosTE)){
+                        val opener = serverWorld.getTileEntity(message.blockPosTE) as TileOpener
+                        opener.targetPos = message.blockPosLT
+                    }
                 }
             }
             return null
