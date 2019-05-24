@@ -2,6 +2,8 @@ package com.alleluid.littleopener
 
 import net.minecraft.client.Minecraft
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.text.ChatType
+import net.minecraft.util.text.TextComponentString
 
 object Utils {
     const val validIntChars = "1234567890-"
@@ -15,10 +17,13 @@ object Utils {
             14,         //Backspace
             221,        //Delete
             203,        //Left Arrow
-            205,        //Right Arrow
-            15          //Tab
+            205        //Right Arrow
     )
 
-    val BlockPos.intMin
-        get() = BlockPos(Int.MIN_VALUE, Int.MIN_VALUE, Int.MIN_VALUE)
+    @JvmStatic fun BlockPos.intMin() = BlockPos(Int.MIN_VALUE, Int.MIN_VALUE, Int.MIN_VALUE)
+    @JvmStatic fun intMinBlockPos() = BlockPos(Int.MIN_VALUE, Int.MIN_VALUE, Int.MIN_VALUE)
+
+    fun statusMessage(msg: Any) = Minecraft.getMinecraft().ingameGUI.addChatMessage(ChatType.GAME_INFO, TextComponentString(msg.toString()))
+    fun chatMessage(msg: Any) = Minecraft.getMinecraft().ingameGUI.addChatMessage(ChatType.SYSTEM, TextComponentString(msg.toString()))
+
 }
