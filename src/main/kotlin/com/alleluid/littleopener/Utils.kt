@@ -2,8 +2,6 @@ package com.alleluid.littleopener
 
 import net.minecraft.client.Minecraft
 import net.minecraft.util.math.BlockPos
-import net.minecraft.util.text.ChatType
-import net.minecraft.util.text.TextComponentString
 
 const val validIntChars = "1234567890-"
 
@@ -20,6 +18,3 @@ val specialCharacterCodes = listOf(
 )
 
 val errorBlockPos get() = BlockPos(-1, -1, -1)
-
-fun statusMessage(msg: Any) = Minecraft.getMinecraft().ingameGUI.addChatMessage(ChatType.GAME_INFO, TextComponentString(msg.toString()))
-fun chatMessage(msg: Any) = Minecraft.getMinecraft().ingameGUI.addChatMessage(ChatType.SYSTEM, TextComponentString(msg.toString()))
