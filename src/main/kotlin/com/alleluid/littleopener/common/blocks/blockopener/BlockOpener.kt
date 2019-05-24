@@ -15,7 +15,6 @@ import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.EnumHand
 import net.minecraft.util.math.BlockPos
-import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
 
 object BlockOpener : BlockTileBase<TileOpener>(Material.ROCK, "block_opener", GuiID.LITTLE_OPENER), ITileEntityProvider {
@@ -26,7 +25,6 @@ object BlockOpener : BlockTileBase<TileOpener>(Material.ROCK, "block_opener", Gu
     override fun createNewTileEntity(worldIn: World, meta: Int) = TileOpener()
     override fun createTileEntity(world: World, state: IBlockState) = TileOpener()
 
-    private var isOn: Boolean = false
 
     @SuppressWarnings("deprecation")
     override fun neighborChanged(state: IBlockState, worldIn: World, pos: BlockPos, blockIn: Block, fromPos: BlockPos) {
@@ -57,6 +55,4 @@ object BlockOpener : BlockTileBase<TileOpener>(Material.ROCK, "block_opener", Gu
         } else
             super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ)
     }
-
-    override fun getWeakChanges(world: IBlockAccess, pos: BlockPos) = true
 }
