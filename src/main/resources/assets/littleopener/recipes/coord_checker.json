@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "rc",
+    "sl"
+  ],
+  "key": {
+    "s": {
+      "item": "minecraft:stick"
+    },
+    "r": {
+      "type": "forge:ore_dict",
+      "ore": "dustRedstone"
+    },
+    "l": {
+      "type": "forge:ore_dict",
+      "ore": "gemLapis"
+    },
+    "c": {
+      "item": "minecraft:comparator"
+    }
+  },
+  "result": {
+    "item": "littleopener:coord_checker"
+  }
+}
