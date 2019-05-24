@@ -51,9 +51,13 @@ class CoordsMessage(var blockPosTE: BlockPos, var blockPosLT: BlockPos) : IMessa
             if (message != null && ctx != null) {
                 if (listOf(message.blockPosLT, message.blockPosTE).contains(errorBlockPos))
                     return null
+
                 val serverWorld = ctx.serverHandler.player.serverWorld
                 serverWorld.addScheduledTask {
-                    if (serverWorld.isBlockLoaded(message.blockPosLT) && serverWorld.isBlockLoaded(message.blockPosTE)){
+                    if (listOf(message.blockPosLT, message.blockPosTE).all {
+                                serverWorld.isBlockLoaded(it)
+                                    && serverWorld.isBlockModifiable(ctx.serverHandler.player, it)
+                            }){
                         val opener = serverWorld.getTileEntity(message.blockPosTE) as TileOpener
                         opener.targetPos = message.blockPosLT
                     }
@@ -69,6 +73,7 @@ class CoordsMessage(var blockPosTE: BlockPos, var blockPosLT: BlockPos) : IMessa
                 Minecraft.getMinecraft().addScheduledTask {
                     val opener = Minecraft.getMinecraft().world.getTileEntity(message.blockPosTE) as TileOpener
                     opener.targetPos = message.blockPosLT
+
                     val screen = Minecraft.getMinecraft().currentScreen
                     if (screen is GuiOpener){
                         screen.setFields(message.blockPosLT)

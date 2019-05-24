@@ -36,7 +36,7 @@ object BlockOpener : BlockTileBase<TileOpener>(Material.ROCK, "block_opener", Gu
 
     override fun onBlockActivated(worldIn: World, pos: BlockPos, state: IBlockState, playerIn: EntityPlayer, hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean {
         val tile = worldIn.getTileEntity(pos) as TileOpener
-        return if (guiID != null) {
+        return if (guiID != null && worldIn.isBlockModifiable(playerIn, pos)) {
             when {
                 playerIn.isSneaking -> {
                     if (!worldIn.isRemote) {
