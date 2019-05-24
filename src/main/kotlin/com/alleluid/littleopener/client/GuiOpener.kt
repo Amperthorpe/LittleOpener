@@ -1,7 +1,7 @@
 package com.alleluid.littleopener.client
 
-import com.alleluid.littleopener.PacketHandler
 import com.alleluid.littleopener.CoordsMessage
+import com.alleluid.littleopener.PacketHandler
 import com.alleluid.littleopener.Utils
 import com.alleluid.littleopener.common.blocks.blockopener.TileOpener
 import net.minecraft.client.Minecraft
@@ -75,7 +75,7 @@ class GuiOpener(val openerPos: BlockPos) : GuiScreen() {
                 fieldInt--
 
             focused.text = fieldInt.toString()
-        } else if (Utils.keyRight.isActiveAndMatches(keyCode)){
+        } else if (keyCode == 15){
             val focusedIdx = fields.indexOfFirst { it.isFocused }
             fields.forEach { it.isFocused = false }
             val newIdx = if (focusedIdx + 1 > 2) 0 else focusedIdx + 1
