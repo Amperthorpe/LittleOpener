@@ -52,6 +52,7 @@ object CoordChecker : Item() {
             }
         } else {
             stack.tagCompound!!.setLong("targetPos", pos.toLong())
+            playerMessage(player, "coord_checker.set_wand_pos", pos)
         }
         return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ)
     }
