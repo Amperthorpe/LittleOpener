@@ -9,12 +9,9 @@ import net.minecraft.block.Block
 import net.minecraft.block.material.MapColor
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState
-import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.Item
 import net.minecraft.item.ItemBlock
 import net.minecraft.tileentity.TileEntity
-import net.minecraft.util.EnumFacing
-import net.minecraft.util.EnumHand
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
@@ -60,17 +57,6 @@ abstract class BlockTileBase<TE : TileEntity>(material: Material, private val na
     abstract override fun createTileEntity(world: World, state: IBlockState): TE?
     override fun hasTileEntity(state: IBlockState) = true
     fun getTileEntity(world: IBlockAccess, pos: BlockPos): TE = world.getTileEntity(pos) as TE
-
-    override fun onBlockActivated(worldIn: World, pos: BlockPos, state: IBlockState, playerIn: EntityPlayer, hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean {
-        return run {
-            if (guiID != null) {
-                if (!worldIn.isRemote && !playerIn.isSneaking) {
-                    playerIn.openGui(LittleOpenerMod.instance, guiID.ordinal, worldIn, pos.x, pos.y, pos.z)
-                }
-            }
-            true
-        }
-    }
 
         override fun getItemDropped(state: IBlockState, rand: Random, fortune: Int): Item {
         return Item.getItemFromBlock(this)
