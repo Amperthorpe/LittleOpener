@@ -26,12 +26,6 @@ object PacketHandler {
 
 class CoordsMessage(var blockPosTE: BlockPos, var blockPosLT: BlockPos) : IMessage {
 
-
-    constructor(toSendXTE: Int, toSendYTE: Int, toSendZTE: Int,
-                    toSendXLT: Int, toSendYLT: Int, toSendZLT: Int) :
-            this(BlockPos(toSendXTE, toSendYTE, toSendZTE),
-                    BlockPos(toSendXLT, toSendYLT, toSendZLT))
-
     constructor() : this(errorBlockPos, errorBlockPos)
 
     override fun toBytes(buf: ByteBuf) {
