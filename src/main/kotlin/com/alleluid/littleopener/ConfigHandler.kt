@@ -20,7 +20,7 @@ object ConfigHandler {
         maxDistance = config?.getInt("maxDistance", "General", 25, 0, Int.MAX_VALUE,
                 "Maximum distance between LittleTiles and opener blocks. 0 for no limit.")
         isButton = config?.getBoolean("isButton", "General", true,
-                "Should opener act as button, activating on right click?")
+                "Should opener act as a button, activating on right click?")
 
         if (config?.hasChanged() == true) config!!.save()
     }
