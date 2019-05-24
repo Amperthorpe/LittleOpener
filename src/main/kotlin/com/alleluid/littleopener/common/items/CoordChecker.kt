@@ -46,8 +46,7 @@ object CoordChecker : Item() {
             val newPos = BlockPos.fromLong(stack.tagCompound!!.getLong("targetPos"))
             if (tileOpener.checkRange(newPos)){
                 tileOpener.targetPos = newPos
-                if (worldIn.isRemote)
-                    player.sendStatusMessage(TextComponentTranslation("text.littleopener.coord_checker.new_pos", newPos), true)
+                if (worldIn.isRemote) player.sendStatusMessage(TextComponentTranslation("text.littleopener.coord_checker.new_pos", newPos), true)
             } else {
                 if (worldIn.isRemote) player.sendStatusMessage(TextComponentTranslation("text.littleopener.coord_checker.too_far", ConfigHandler.maxDistance), true)
             }
