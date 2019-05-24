@@ -3,9 +3,9 @@ package com.alleluid.littleopener.common.items
 import com.alleluid.littleopener.ConfigHandler
 import com.alleluid.littleopener.LittleOpenerMod
 import com.alleluid.littleopener.MOD_ID
-import com.alleluid.littleopener.Utils
 import com.alleluid.littleopener.common.blocks.blockopener.BlockOpener
 import com.alleluid.littleopener.common.blocks.blockopener.TileOpener
+import net.minecraft.client.resources.I18n
 import net.minecraft.client.util.ITooltipFlag
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
@@ -29,8 +29,8 @@ object CoordChecker : Item() {
     }
 
     override fun addInformation(stack: ItemStack, worldIn: World?, tooltip: MutableList<String>, flagIn: ITooltipFlag) {
-        tooltip.add("Will display and store coords of block clicked.")
-        tooltip.add("Use on Little Opener to transfer.")
+        tooltip.add(I18n.format("text.littleopener.coord_checker.info1"))
+        tooltip.add(I18n.format("text.littleopener.coord_checker.info2"))
         super.addInformation(stack, worldIn, tooltip, flagIn)
     }
 

@@ -1,3 +1,6 @@
 item.littleopener.coord_checker.name=Coordinate Setter
 
 tile.littleopener.block_opener.name=Little Opener
+
+text.littleopener.coord_checker.info1=Will display and store coords of block clicked.
+text.littleopener.coord_checker.info2=Use on Little Opener to transfer.
