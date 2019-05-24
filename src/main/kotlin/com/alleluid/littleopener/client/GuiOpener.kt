@@ -6,7 +6,9 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Gui
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.client.gui.GuiTextField
+import net.minecraft.client.resources.I18n
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.text.TextComponentTranslation
 
 class GuiOpener(val openerPos: BlockPos) : GuiScreen() {
     val X_FIELD = 0
@@ -46,9 +48,9 @@ class GuiOpener(val openerPos: BlockPos) : GuiScreen() {
         drawDefaultBackground()
         super.drawScreen(mouseX, mouseY, partialTicks)
         Gui.drawRect(width / 2 - 20, height / 2 - 20, width / 2 + 20, height / 2 + 20, 0xffffff)
-        drawCenteredString(fontRenderer, "Set Opener Coordinates", width / 2, height / 2 - 15, 0xffffff)
+        drawCenteredString(fontRenderer, I18n.format("text.littleopener.gui_opener.title"), width / 2, height / 2 - 15, 0xffffff)
         fields.forEach { it.drawTextBox() }
-        drawCenteredString(fontRenderer, "Max distance to Little Tile: ${ConfigHandler.maxDistance}", width / 2, height / 2 + 25, 0xa0a0a0)
+        drawCenteredString(fontRenderer, I18n.format("text.littleopener.gui_opener.max_dist", ConfigHandler.maxDistance), width / 2, height / 2 + 25, 0xa0a0a0)
     }
 
     override fun mouseClicked(mouseX: Int, mouseY: Int, mouseButton: Int) {
@@ -64,13 +66,13 @@ class GuiOpener(val openerPos: BlockPos) : GuiScreen() {
             fields.forEach { it.textboxKeyTyped(typedChar, keyCode) }
 
         // If W or S are pressed, increment/decrement focused coord
-        } else if (Utils.keyForward.isActiveAndMatches(keyCode) || Utils.keyBack.isActiveAndMatches(keyCode)){
+        } else if (keyForward.isActiveAndMatches(keyCode) || keyBack.isActiveAndMatches(keyCode)){
             val focused = fields.firstOrNull { it.isFocused }
             var fieldInt = focused?.text?.toIntOrNull() ?: return
 
-            if (Utils.keyForward.isActiveAndMatches(keyCode))
+            if (keyForward.isActiveAndMatches(keyCode))
                 fieldInt++
-            else if (Utils.keyBack.isActiveAndMatches(keyCode))
+            else if (keyBack.isActiveAndMatches(keyCode))
                 fieldInt--
 
             focused.text = fieldInt.toString()
@@ -79,7 +81,7 @@ class GuiOpener(val openerPos: BlockPos) : GuiScreen() {
             fields.forEach { it.isFocused = false }
             val newIdx = if (focusedIdx + 1 > 2) 0 else focusedIdx + 1
             fields[newIdx].isFocused = true
-        } else if (Utils.keyInv.isActiveAndMatches(keyCode)) {
+        } else if (keyInv.isActiveAndMatches(keyCode)) {
             this.mc.player.closeScreen()
         } else println("Keycode: $keyCode")
     }
@@ -88,7 +90,7 @@ class GuiOpener(val openerPos: BlockPos) : GuiScreen() {
         val intFields = fields.map { it.text.toIntOrNull() ?: Int.MIN_VALUE}
         val posLT = BlockPos(intFields[0], intFields[1], intFields[2])
         if (openerPos.getDistance(intFields[0], intFields[1], intFields[2]) > ConfigHandler.maxDistance?.toDouble() ?: 25.0)
-            Utils.chatMessage("Distance to tile over limit! Restored previous coordinates.")
+            Minecraft.getMinecraft().player.sendStatusMessage(TextComponentTranslation("text.littleopener.gui_opener.over_limit"), true)
         PacketHandler.INSTANCE.sendToServer(CoordsMessage(openerPos, posLT))
         super.onGuiClosed()
     }
