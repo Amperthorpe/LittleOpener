@@ -15,10 +15,12 @@ import net.minecraftforge.fml.common.registry.GameRegistry
 class TileOpener : TileEntity() {
     var isTriggered = false
     private val name = "tile_opener"
-    var targetPos: BlockPos = pos // Will be 0,0,0 on init
+    private var _targetPos: BlockPos = pos
+    var targetPos: BlockPos // Will be 0,0,0 on init
+        get() = _targetPos
         set(value) {
             if (checkRange(value)){
-                field = value
+                _targetPos = value
                 markDirty()
             }
         }
@@ -63,7 +65,7 @@ class TileOpener : TileEntity() {
             val x = compound.getInteger("targetPosX")
             val y = compound.getInteger("targetPosY")
             val z = compound.getInteger("targetPosZ")
-            targetPos = BlockPos(x, y, z)
+            _targetPos = BlockPos(x, y, z)
         }
         super.readFromNBT(compound)
     }
