@@ -1,11 +1,12 @@
 package com.alleluid.littleopener
 
 import net.minecraft.client.Minecraft
+import net.minecraft.client.settings.KeyBinding
 import net.minecraft.util.math.BlockPos
 
-val keyForward get() = Minecraft.getMinecraft().gameSettings.keyBindForward
-val keyBack get() = Minecraft.getMinecraft().gameSettings.keyBindBack
-val keyInv get() = Minecraft.getMinecraft().gameSettings.keyBindInventory
+val keyForward: KeyBinding get() = Minecraft.getMinecraft().gameSettings.keyBindForward
+val keyBack: KeyBinding get() = Minecraft.getMinecraft().gameSettings.keyBindBack
+val keyInv: KeyBinding get() = Minecraft.getMinecraft().gameSettings.keyBindInventory
 
 const val validIntChars = "1234567890-"
 
