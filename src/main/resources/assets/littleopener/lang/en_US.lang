@@ -4,3 +4,6 @@ tile.littleopener.block_opener.name=Little Opener
 
 text.littleopener.coord_checker.info1=Will display and store coords of block clicked.
 text.littleopener.coord_checker.info2=Use on Little Opener to transfer.
+
+text.littleopener.coord_checker.new_pos=§aSet opener to %s
+text.littleopener.coord_checker.too_far=§cBlock too far! Max is %s blocks.

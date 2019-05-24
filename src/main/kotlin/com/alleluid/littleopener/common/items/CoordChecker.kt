@@ -17,6 +17,7 @@ import net.minecraft.util.EnumFacing
 import net.minecraft.util.EnumHand
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.text.TextComponentTranslation
 import net.minecraft.world.World
 
 object CoordChecker : Item() {
@@ -46,14 +47,12 @@ object CoordChecker : Item() {
             if (tileOpener.checkRange(newPos)){
                 tileOpener.targetPos = newPos
                 if (worldIn.isRemote)
-                    Utils.statusMessage("§aSet opener to $newPos")
+                    player.sendStatusMessage(TextComponentTranslation("text.littleopener.coord_checker.new_pos", newPos), true)
             } else {
-                if (worldIn.isRemote) Utils.statusMessage("§cBlock too far! Max is ${ConfigHandler.maxDistance} blocks.")
+                if (worldIn.isRemote) player.sendStatusMessage(TextComponentTranslation("text.littleopener.coord_checker.too_far", ConfigHandler.maxDistance), true)
             }
         } else {
             stack.tagCompound!!.setLong("targetPos", pos.toLong())
-            if (worldIn.isRemote)
-                Utils.chatMessage(pos.toString())
         }
         return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ)
     }
