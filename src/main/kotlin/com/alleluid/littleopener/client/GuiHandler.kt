@@ -16,7 +16,7 @@ class GuiHandler : IGuiHandler{
 
     override fun getServerGuiElement(ID: Int, player: EntityPlayer?, world: World?, x: Int, y: Int, z: Int): Any? {
         return when (GuiID.values()[ID]) {
-            GuiID.LITTLE_OPENER -> GuiOpener(BlockPos(x, y, z))
+            GuiID.LITTLE_OPENER -> null
         }
     }
 }
