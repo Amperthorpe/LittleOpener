@@ -2,9 +2,9 @@
   {
     "modid": "littleopener",
     "name": "Little Opener",
-    "description": "",
-    "version": "${version}",
-    "mcversion": "${mcversion}",
+    "description": "A little Minecraft Forge mod to add redstone support to LittleTiles ",
+    "version": "1.0.0",
+    "mcversion": "$mcversion",
     "url": "",
     "updateUrl": "",
     "authorList": [

@@ -20,7 +20,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry
 
 const val MOD_ID = "littleopener"
 const val MOD_NAME = "Little Opener"
-const val VERSION = "1.0-SNAPSHOT"
+const val VERSION = "1.0.0"
 
 
 @Mod(
