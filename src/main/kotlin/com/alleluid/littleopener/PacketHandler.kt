@@ -34,14 +34,16 @@ class CoordsMessage(var blockPosTE: BlockPos, var blockPosLT: BlockPos) : IMessa
 
     constructor() : this(errorBlockPos, errorBlockPos)
 
-    override fun toBytes(buf: ByteBuf?) {
-        buf?.writeLong(blockPosTE.toLong())
-        buf?.writeLong(blockPosLT.toLong())
+    override fun toBytes(buf: ByteBuf) {
+        if (blockPosLT == errorBlockPos || blockPosTE == errorBlockPos)
+            return
+        buf.writeLong(blockPosTE.toLong())
+        buf.writeLong(blockPosLT.toLong())
     }
 
-    override fun fromBytes(buf: ByteBuf?) {
-        blockPosTE = BlockPos.fromLong(buf?.readLong() ?: errorBlockPos.toLong())
-        blockPosLT = BlockPos.fromLong(buf?.readLong() ?: errorBlockPos.toLong())
+    override fun fromBytes(buf: ByteBuf) {
+        blockPosTE = BlockPos.fromLong(buf.readLong())
+        blockPosLT = BlockPos.fromLong(buf.readLong())
     }
 
     class SaveCoordsMessageHandler : IMessageHandler<CoordsMessage, IMessage> {
