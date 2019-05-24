@@ -76,11 +76,11 @@ abstract class BlockTileBase<TE : TileEntity>(material: Material, private val na
         return Item.getItemFromBlock(this)
     }
 
-    fun registerItemModel() {
+    open fun registerItemModel() {
         LittleOpenerMod.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, name)
     }
 
-    fun createItemBlock(): Item {
+    open fun createItemBlock(): Item {
         return ItemBlock(this).setRegistryName(registryName)
     }
 
