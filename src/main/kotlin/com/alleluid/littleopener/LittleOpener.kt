@@ -53,9 +53,6 @@ object LittleOpenerMod{
             clientSide = "com.alleluid.littleopener.proxy.ClientProxy")
     var proxy = CommonProxy()
 
-    @Mod.Instance
-    var instance = LittleOpenerMod
-
     @JvmStatic
     val creativeTab = CreativeTabs.REDSTONE
 }

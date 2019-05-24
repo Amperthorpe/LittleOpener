@@ -42,7 +42,7 @@ object BlockOpener : BlockTileBase<TileOpener>(Material.ROCK, "block_opener", Gu
                     if (!worldIn.isRemote) {
                         PacketHandler.INSTANCE.sendTo(CoordsMessage(pos, tile.targetPos), playerIn as EntityPlayerMP)
                     }
-                    playerIn.openGui(LittleOpenerMod.instance, guiID.ordinal, worldIn, pos.x, pos.y, pos.z)
+                    playerIn.openGui(LittleOpenerMod, guiID.ordinal, worldIn, pos.x, pos.y, pos.z)
                     true
                 }
                 ConfigHandler.isButton == true -> {
