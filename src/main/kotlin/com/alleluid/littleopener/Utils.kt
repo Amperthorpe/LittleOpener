@@ -8,10 +8,10 @@ import net.minecraft.util.text.TextComponentString
 object Utils {
     const val validIntChars = "1234567890-"
 
-    val keyForward = Minecraft.getMinecraft().gameSettings.keyBindForward
-    val keyBack = Minecraft.getMinecraft().gameSettings.keyBindBack
-    val keyInv = Minecraft.getMinecraft().gameSettings.keyBindInventory
-    val keyRight = Minecraft.getMinecraft().gameSettings.keyBindRight
+    val keyForward get() = Minecraft.getMinecraft().gameSettings.keyBindForward
+    val keyBack get() = Minecraft.getMinecraft().gameSettings.keyBindBack
+    val keyInv get() = Minecraft.getMinecraft().gameSettings.keyBindInventory
+    val keyRight get() = Minecraft.getMinecraft().gameSettings.keyBindRight
 
     val specialCharacterCodes = listOf(
             14,         //Backspace
