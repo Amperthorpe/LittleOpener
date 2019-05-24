@@ -9,7 +9,7 @@ The structures you can make are impressive, but it's a bit limiting having to ri
 So, I made this mod.
 
 ### Disclaimer
-This is my first released mod, things may be broken. It's fairly simple, but you've been warned. If you run into any issues, please let me know on GitHub!
+This is my first released mod, things may be broken. It's fairly simple, but you've been warned. If you run into any issues, please let me know [on GitHub!](https://github.com/Alleluid/LittleOpener)
 
 Also, the developer of LittleTiles is working on official redstone support, so this mod will likely become obsolete in the future.
 
