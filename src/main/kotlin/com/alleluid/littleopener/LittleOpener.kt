@@ -7,19 +7,15 @@ import com.alleluid.littleopener.proxy.CommonProxy
 import net.minecraft.block.Block
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.item.Item
-import net.minecraft.world.World
 import net.minecraftforge.client.event.ModelRegistryEvent
 import net.minecraftforge.event.RegistryEvent
+import net.minecraftforge.fml.client.event.ConfigChangedEvent
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.SidedProxy
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import net.minecraft.world.WorldServer
-import net.minecraftforge.common.util.FakePlayer
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.network.NetworkRegistry
-import org.apache.logging.log4j.ThreadContext.containsKey
-
 
 
 const val MOD_ID = "littleopener"
@@ -35,18 +31,22 @@ const val VERSION = "1.0-SNAPSHOT"
         useMetadata = true,
         dependencies = "required-after:forgelin;"
 )
-
 object LittleOpenerMod{
 
     @Mod.EventHandler
     fun preInitEvent(event: FMLPreInitializationEvent){
         NetworkRegistry.INSTANCE.registerGuiHandler(this, GuiHandler())
+        ConfigHandler.init(event.suggestedConfigurationFile)
     }
 
     @Mod.EventHandler
     fun initEvent(event: FMLInitializationEvent){
         ModBlocks.registerTileEntities()
         PacketHandler.registerMessages()
+    }
+
+    @SubscribeEvent
+    fun onConfigChangedEvent(event: ConfigChangedEvent.OnConfigChangedEvent){
     }
 
     @SidedProxy(serverSide = "com.alleluid.littleopener.proxy.CommonProxy",
