@@ -1,9 +1,6 @@
 package com.alleluid.littleopener.client
 
-import com.alleluid.littleopener.ConfigHandler
-import com.alleluid.littleopener.CoordsMessage
-import com.alleluid.littleopener.PacketHandler
-import com.alleluid.littleopener.Utils
+import com.alleluid.littleopener.*
 import com.alleluid.littleopener.common.blocks.blockopener.TileOpener
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Gui
@@ -61,8 +58,8 @@ class GuiOpener(val openerPos: BlockPos) : GuiScreen() {
 
     override fun keyTyped(typedChar: Char, keyCode: Int) {
         super.keyTyped(typedChar, keyCode)
-        if (Utils.validIntChars.contains(typedChar, true) ||
-            Utils.specialCharacterCodes.contains(keyCode)
+        if (validIntChars.contains(typedChar, true) ||
+            specialCharacterCodes.contains(keyCode)
         ) {
             fields.forEach { it.textboxKeyTyped(typedChar, keyCode) }
 

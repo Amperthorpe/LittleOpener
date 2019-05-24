@@ -24,8 +24,6 @@ object PacketHandler {
     }
 }
 
-val errorBlockPos = BlockPos(Int.MIN_VALUE, Int.MIN_VALUE, Int.MIN_VALUE)
-
 class CoordsMessage(var blockPosTE: BlockPos, var blockPosLT: BlockPos) : IMessage {
 
 
