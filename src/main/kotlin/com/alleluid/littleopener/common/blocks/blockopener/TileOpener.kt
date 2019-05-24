@@ -15,15 +15,21 @@ import net.minecraftforge.fml.common.registry.GameRegistry
 class TileOpener : TileEntity() {
     var isTriggered = false
     private val name = "tile_opener"
-    private var _targetPos: BlockPos = pos
+    private var _targetPos: BlockPos? = null
     var targetPos: BlockPos // Will be 0,0,0 on init
-        get() = _targetPos
+        get() = _targetPos ?: pos
         set(value) {
             if (checkRange(value)){
                 _targetPos = value
                 markDirty()
             }
         }
+
+    override fun onLoad() {
+        if (_targetPos == null)
+            _targetPos = pos
+        super.onLoad()
+    }
 
     fun checkRange(checkPos: BlockPos = targetPos): Boolean {
         val maxDist = ConfigHandler.maxDistance?.toDouble() ?: return false
