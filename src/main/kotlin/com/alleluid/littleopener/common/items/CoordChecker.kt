@@ -1,10 +1,11 @@
 package com.alleluid.littleopener.common.items
 
+import com.alleluid.littleopener.ConfigHandler
 import com.alleluid.littleopener.LittleOpenerMod
 import com.alleluid.littleopener.MOD_ID
+import com.alleluid.littleopener.Utils
 import com.alleluid.littleopener.common.blocks.blockopener.BlockOpener
 import com.alleluid.littleopener.common.blocks.blockopener.TileOpener
-import net.minecraft.client.Minecraft
 import net.minecraft.client.util.ITooltipFlag
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
@@ -16,8 +17,6 @@ import net.minecraft.util.EnumFacing
 import net.minecraft.util.EnumHand
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.math.BlockPos
-import net.minecraft.util.text.ChatType
-import net.minecraft.util.text.TextComponentString
 import net.minecraft.world.World
 
 object CoordChecker : Item() {
@@ -31,7 +30,7 @@ object CoordChecker : Item() {
 
     override fun addInformation(stack: ItemStack, worldIn: World?, tooltip: MutableList<String>, flagIn: ITooltipFlag) {
         tooltip.add("Will display and store coords of block clicked.")
-        tooltip.add("Shift click onto Little Opener to transfer.")
+        tooltip.add("Use on Little Opener to transfer.")
         super.addInformation(stack, worldIn, tooltip, flagIn)
     }
 
@@ -43,15 +42,18 @@ object CoordChecker : Item() {
 
         if (worldIn.getBlockState(pos).block is BlockOpener) {
             val tileOpener = worldIn.getTileEntity(pos) as TileOpener
-            val longPos = stack.tagCompound!!.getLong("targetPos")
-            tileOpener.targetPos = BlockPos.fromLong(longPos)
-            if (worldIn.isRemote) {
-                Minecraft.getMinecraft().ingameGUI.addChatMessage(ChatType.GAME_INFO, TextComponentString("Set opener to ${BlockPos.fromLong(longPos)}"))
+            val newPos = BlockPos.fromLong(stack.tagCompound!!.getLong("targetPos"))
+            if (tileOpener.checkRange(newPos)){
+                tileOpener.targetPos = newPos
+                if (worldIn.isRemote)
+                    Utils.statusMessage("§aSet opener to $newPos")
+            } else {
+                if (worldIn.isRemote) Utils.statusMessage("§cBlock too far! Max is ${ConfigHandler.maxDistance} blocks.")
             }
         } else {
             stack.tagCompound!!.setLong("targetPos", pos.toLong())
             if (worldIn.isRemote)
-                Minecraft.getMinecraft().ingameGUI.addChatMessage(ChatType.SYSTEM, TextComponentString(pos.toString()))
+                Utils.chatMessage(pos.toString())
         }
         return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ)
     }

@@ -1,45 +1,43 @@
 package com.alleluid.littleopener.common.blocks.blockopener
 
+import com.alleluid.littleopener.ConfigHandler
 import com.alleluid.littleopener.MOD_ID
-import com.mojang.authlib.GameProfile
 import io.netty.buffer.ByteBuf
-import net.minecraft.block.state.IBlockState
-import net.minecraft.command.CommandSenderWrapper
 import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.network.NetworkManager
-import net.minecraft.network.play.server.SPacketUpdateTileEntity
 import net.minecraft.server.MinecraftServer
 import net.minecraft.tileentity.CommandBlockBaseLogic
 import net.minecraft.tileentity.TileEntity
-import net.minecraft.util.EnumFacing
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.math.BlockPos
-import net.minecraft.util.text.TextComponentString
 import net.minecraft.world.World
-import net.minecraft.world.WorldServer
-import net.minecraftforge.common.capabilities.Capability
-import net.minecraftforge.common.util.FakePlayer
-import net.minecraftforge.common.util.FakePlayerFactory
 import net.minecraftforge.fml.common.registry.GameRegistry
-import java.util.*
 
 class TileOpener : TileEntity() {
     private val name = "tile_opener"
     var targetPos: BlockPos = pos // Will be 0,0,0 on init
         set(value) {
-            field = value
-            markDirty()
+            if (checkRange(value)){
+                field = value
+                markDirty()
+            }
         }
+
+    fun checkRange(checkPos: BlockPos = targetPos): Boolean {
+        val maxDist = ConfigHandler.maxDistance?.toDouble() ?: return false
+        if (maxDist < 1) return true
+        return pos.getDistance(checkPos.x, checkPos.y, checkPos.z) <= maxDist
+    }
 
     fun onPowered() {
         if (!world.isRemote && world.isBlockLoaded(targetPos)) {
+            if (!checkRange()) {
+                targetPos = BlockPos.ORIGIN
+                return
+            }
             val cmdSender = CommandLogic(world)
             val rawCommand = "/lt-open ${targetPos.x} ${targetPos.y} ${targetPos.z}"
             val serv = world.minecraftServer
-            if (serv != null) {
-                serv.commandManager.executeCommand(cmdSender, rawCommand)
-            } else
-                println("It was null")
+            serv?.commandManager?.executeCommand(cmdSender, rawCommand)
         }
     }
 
