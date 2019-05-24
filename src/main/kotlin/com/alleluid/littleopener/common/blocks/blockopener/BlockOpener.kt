@@ -28,8 +28,7 @@ object BlockOpener : BlockTileBase<TileOpener>(Material.ROCK, "block_opener", Gu
 
     @SuppressWarnings("deprecation")
     override fun neighborChanged(state: IBlockState, worldIn: World, pos: BlockPos, blockIn: Block, fromPos: BlockPos) {
-        if (worldIn.getRedstonePowerFromNeighbors(pos) > 0)
-        getTileEntity(worldIn, pos).onPowered()
+        getTileEntity(worldIn, pos).redstoneHandling(worldIn.isBlockPowered(pos))
     }
 
     override val tileEntityClass: Class<TileOpener>
@@ -47,7 +46,7 @@ object BlockOpener : BlockTileBase<TileOpener>(Material.ROCK, "block_opener", Gu
                     true
                 }
                 ConfigHandler.isButton == true -> {
-                    tile.onPowered()
+                    tile.activate()
                     true
                 }
                 else -> false

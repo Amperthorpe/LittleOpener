@@ -13,6 +13,7 @@ import net.minecraft.world.World
 import net.minecraftforge.fml.common.registry.GameRegistry
 
 class TileOpener : TileEntity() {
+    var isTriggered = false
     private val name = "tile_opener"
     var targetPos: BlockPos = pos // Will be 0,0,0 on init
         set(value) {
@@ -38,6 +39,15 @@ class TileOpener : TileEntity() {
             val rawCommand = "/lt-open ${targetPos.x} ${targetPos.y} ${targetPos.z}"
             val serv = world.minecraftServer
             serv?.commandManager?.executeCommand(cmdSender, rawCommand)
+        }
+    }
+
+    fun redstoneHandling(isPowered: Boolean){
+        if (isPowered && !isTriggered){
+            isTriggered = true
+            activate()
+        } else if (!isPowered && isTriggered){
+            isTriggered = false
         }
     }
 
