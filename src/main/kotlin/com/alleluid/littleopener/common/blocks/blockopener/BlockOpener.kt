@@ -43,7 +43,7 @@ object BlockOpener : BlockTileBase<TileOpener>(Material.ROCK, "block_opener", Gu
         return if (guiID != null) {
             if (playerIn.isSneaking) {
                 if (!worldIn.isRemote) {
-                    PacketHandler.INSTANCE.sendTo(CoordsMessage(pos.x, pos.y, pos.z, tile.targetPos.x, tile.targetPos.y, tile.targetPos.z), playerIn as EntityPlayerMP)
+                    PacketHandler.INSTANCE.sendTo(CoordsMessage(pos, tile.targetPos), playerIn as EntityPlayerMP)
                 }
                 playerIn.openGui(LittleOpenerMod.instance, guiID.ordinal, worldIn, pos.x, pos.y, pos.z)
             } else {
