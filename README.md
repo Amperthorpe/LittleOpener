@@ -20,5 +20,5 @@ Example use, for doors:
 ![Doors2](https://i.imgur.com/OQKbLuj.png)
 
 How the wand works and GUI looks:
-![Wand1](https://i.imgur.com/AHm9sYL.png)
-![Wand2](https://i.imgur.com/CJ8S44n.png)
+![Wand1](https://i.imgur.com/cp9RB3a.png)
+![Wand2](https://i.imgur.com/2wqYpVi.png)
