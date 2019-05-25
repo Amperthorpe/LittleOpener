@@ -21,6 +21,10 @@ val specialCharacterCodes = listOf(
 
 val errorBlockPos get() = BlockPos(-1, -1, -1)
 
-fun playerMessage(player: EntityPlayer, keyName: String, vararg args: Any?){
-    if (player.world.isRemote) player.sendStatusMessage(TextComponentTranslation("text.littleopener.$keyName", args), true)
+fun playerMessage(player: EntityPlayer, keyName: String, vararg args: Any?) {
+    val newArgs = args.toMutableList().onEach { it.toString() }
+    if (player.world.isRemote) player.sendStatusMessage(
+            TextComponentTranslation("text.littleopener.$keyName", newArgs),
+            true
+    )
 }
