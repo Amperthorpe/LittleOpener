@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "iRi",
-    "LcL",
+    "lcl",
     "iRi"
   ],
   "key": {
@@ -14,9 +14,9 @@
       "type": "forge:ore_dict",
       "ore": "blockRedstone"
     },
-    "L": {
+    "l": {
       "type": "forge:ore_dict",
-      "ore": "blockLapis"
+      "ore": "gemLapis"
     },
     "c": {
       "item": "minecraft:comparator"
