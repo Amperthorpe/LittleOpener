@@ -6,7 +6,7 @@ text.littleopener.coord_checker.info1=Will display and store coords of block cli
 text.littleopener.coord_checker.info2=Use on Little Opener to transfer.
 
 text.littleopener.coord_checker.set_opener_pos=§aSet opener to %s
-text.littleopener.coord_checker.too_far=§cBlock too far! Max is %s§c blocks.
+text.littleopener.coord_checker.over_limit=§cDistance to tile over limit! Max is %s§c blocks.
 text.littleopener.coord_checker.set_wand_pos=%s
 
 text.littleopener.gui_opener.over_limit=Distance to tile over limit! Restored previous coordinates.
