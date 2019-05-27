@@ -1,0 +1,14 @@
+item.littleopener.coord_checker.name=Coördinaat insteller
+
+tile.littleopener.block_opener.name=Little Openmaker
+
+text.littleopener.coord_checker.info1=Zal de coördinaten van het geklikte block weergeven en opslaan
+text.littleopener.coord_checker.info2=Gebruik op de Little Openmaker om over te zetten.
+
+text.littleopener.coord_checker.set_opener_pos=§aStel openmaker in op %s
+text.littleopener.coord_checker.over_limit=§cAfstand naar de tile over het limiet! maximum is %s§c blokken.
+text.littleopener.coord_checker.set_wand_pos=%s
+
+text.littleopener.gui_opener.over_limit=Afstand naar de tile over het limiet! vorige coördinaten hersteld.
+text.littleopener.gui_opener.title=Stel Openmaker coördinaten in
+text.littleopener.gui_opener.max_dist=Maximum afstand naar Little Tile: %s
